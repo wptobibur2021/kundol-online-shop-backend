@@ -26,8 +26,6 @@ async function verifyToken(req, res, next) {
     }
     next()
 }
-
-
 // Database Information
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@kundol.cbpbf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -97,7 +95,6 @@ async function kundolDb (){
             }
             await res.json({admin: isAdmin})
         })
-
         /* POST Methods Declaration Below */
 
         // Orders POST API
@@ -161,6 +158,7 @@ async function kundolDb (){
             const result = await collectionOrder.deleteOne(query)
             await res.json(result)
         })
+        // Delete Methods Product API
         app.delete('/api/product/remove/:id', async (req,res)=>{
             const id = req.params.id
             const query = {_id: objectId(id)}
@@ -172,15 +170,6 @@ async function kundolDb (){
     }
 }
 kundolDb().catch(console.dir)
-
-
-// client.connect(err => {
-//     const collection = client.db("test").collection("devices");
-//     // perform actions on the collection object
-//     client.close();
-// });
-
-
 
 //Test API GET
 app.get('/', async (req,res)=>{
