@@ -44,7 +44,7 @@ async function kundolDb (){
         // Get API
         app.get('/api/products', async (req,res)=>{
             const allProducts = await collectionProducts.find({})
-            const result = await allProducts.toArray()
+            const result = await allProducts.slice(0,6).toArray()
             await res.json(result)
         })
         // Get One Product by ID
