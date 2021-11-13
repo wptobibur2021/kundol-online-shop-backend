@@ -61,9 +61,10 @@ async function kundolDb (){
             await res.json(result)
         })
         // GET API For Customer Wise
-        app.get('/api/user/orders/:uid', async (req, res)=>{
-            const uid = req.params.uid
-            const query = {userId: uid}
+        app.get('/api/user/orders/:email', async (req, res)=>{
+            const email = req.params.email
+            console.log('Email: ', email)
+            const query = {userEmail: email}
             const getData = await collectionOrder.find(query)
             const result = await getData.toArray()
            await res.json(result)
