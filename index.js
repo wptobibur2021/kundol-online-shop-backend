@@ -42,9 +42,15 @@ async function kundolDb (){
         const collectionUsers = database.collection('users')
         /* GET API Methods Declaration Below */
         // Get API
+        app.get('/api/shop/products', async (req,res)=>{
+            const allProducts = await collectionProducts.find({})
+            const result = await allProducts.toArray()
+            await res.json(result)
+        })
+        // Get API
         app.get('/api/products', async (req,res)=>{
             const allProducts = await collectionProducts.find({})
-            const result = await allProducts.slice(0,6).toArray()
+            const result = await allProducts.limit(6).toArray()
             await res.json(result)
         })
         // Get One Product by ID
