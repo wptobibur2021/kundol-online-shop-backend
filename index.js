@@ -18,6 +18,7 @@ admin.initializeApp({
 async function verifyToken(req, res, next) {
     if(req.headers?.authorization?.startsWith('Bearer ')){
         const userToken = req.headers.authorization.split(' ')[1]
+        console.log(userToken)
         try{
             const decodedUser = await admin.auth().verifyIdToken(userToken)
             req.decodedUserEmail = decodedUser.email
@@ -124,15 +125,11 @@ async function kundolDb (){
         // Order Status Change
         app.put('/api/order/status/:id', verifyToken, async (req, res)=>{
             const id = req.params.id
-            const requester = req.decodedUserEmail
-            if(requester){
-                const filter = {_id: objectId(id)}
-                const updateDoc = {$set: {status: 1 }}
-                const result = await collectionOrder.updateOne(filter,updateDoc)
-                await res.json(result)
-            }else{
-                res.send(403).json({message: 'You can not change order status'})
-            }
+            const filter = {_id: objectId(id)}
+            const updateDoc = {$set: {status: 1 }}
+            const result = await collectionOrder.updateOne(filter,updateDoc)
+            await res.json(result)
+               
         })
         // Make Admin User
         app.put('/api/make-admin-user/:id',verifyToken, async (req,res)=>{
